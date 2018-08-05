@@ -4,27 +4,30 @@ $(document).ready(function () {
   $("#splash").delay("3000").slideUp("slow");
   $("#main-page").delay("3000").fadeIn("slow");
   
+  // criar seções
   $("#main-page").append("<section id='all-photos' class='d-flex flex-wrap justify-content-center ali'></section>");
+
+  $("#main-page").append("<section id='section-modal'></section>");
   
   // carregar todas as imagens na pag principal
   function showAllPhotos() {
-    restaurantes.filter((restaurant, index) => {
-      $("#all-photos").append($("<div> <img id='img" + index + "' class='size-thumbnail rounded m-1' data-toggle='modal' data-target='#start-modal' alt=" + restaurant.name + " src=" + restaurant.image + "> </div>"));
-      console.log(index);
+    restaurantes.map((restaurant, index) => {
+      $("#all-photos").append($("<div> <img id='img" + index + "' class='size-thumbnail rounded m-1' data-toggle='modal' data-target='#start-modal"+ index + "' alt='" + restaurant.name + "' src='" + restaurant.image + "'> </div>"));
+      $("#img" + index).click(createModal(restaurant, index));
     });
   };
   showAllPhotos();
   
   // mostrar fotos filtradas
   function showFilterPhotos(restaurant, index) {
-    $("#all-photos").append($("<div class='restaurant-modal text-center'> <p>" + restaurant.name + "</p> <img id='img" + index + "' class='size-thumbnail-2 rounded m-1' data-toggle='modal' data-target='#start-modal' alt=" + restaurant.name + " src=" + restaurant.image + "></div>")); 
+    $("#all-photos").append($("<div class='restaurant-modal text-center'> <p class='p-0 m-0'>" + restaurant.name + "</p> <img id='img" + index + "' class='size-thumbnail-2 rounded m-1' data-toggle='modal' data-target='#start-modal"+ index +"' alt=" + restaurant.name + " src=" + restaurant.image + "></div>"));
     
-    $("#img" + index).click(createModal(restaurant));
+    $("#img" + index).click(createModal(restaurant, index));
   }
 
   // criar o modal
-  function createModal(restaurant) {
-    $(".modal-body").append("<div class='restaurant-modal border rounded mb-3 p-2 d-flex flex-column align-items-center'> <h2 class='restaurant-name text-warning font-weight-bold'>" + restaurant.name + "</h2> <p class='text-dark mb-2'>" + restaurant.description + "</p> <button type='button' class='btn btn-warning'>Pedir Agora!</button></div>");
+  function createModal(restaurant, index) {
+    $("#section-modal").append("<div id='start-modal" + index + "' class=' modal' tabindex='-1' role='dialog'><div class='modal-dialog-centered' role='document'>        <div class='modal-content text-center'><div class='modal-header'> <h3 class='text-uppercase font-weight-bold'>" + restaurant.type + "</h3> <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='modal-body'><div id='" + index + "' class='restaurant-modal border rounded mb-3 p-2 d-flex flex-column align-items-center'> <h3 class='font-weight-bold'>" + restaurant.name + "</h3> <img id='img" + index + "' class='size-thumbnail-2 rounded m-1' data-toggle='modal' data-target='#start-modal" + index + "' alt=" + restaurant.name + " src=" + restaurant.image + "> <p class='text-dark mb-2'>" + restaurant.description + "</p> <button type='button' class='btn btn-warning'>Pedir Agora!</button></div>       </div></div></div></div>");
   }
 
   // pegar o valor do input e filtrar quando click do botão
@@ -32,14 +35,12 @@ $(document).ready(function () {
     event.preventDefault();
     
     $("#all-photos").empty();
-    $(".restaurant-modal").empty();
-    $(".modal-body").empty();
     var resultSearch = $("#search").val();
     
     restaurantes.forEach( (restaurant, index) => {
       if (resultSearch === restaurant.name || resultSearch === restaurant.type) {
         showFilterPhotos(restaurant, index);
-        // myMap();
+        myMap();
       };
     });
     resultSearch = ($("#search").val("")); 
