@@ -17,7 +17,27 @@ $(document).ready(function () {
     });
   };
   showAllPhotos();
-  
+
+  // autocomplete
+  function getRestaurantsOfData() {
+    var arrRestaurants = [];
+      
+    restaurantes.map((restaurant) => {
+      arrRestaurants.push(restaurant.name)
+      arrRestaurants.push(restaurant.type)
+    });
+
+    arrRestaurants = arrRestaurants.filter(function (x, y) {
+      return arrRestaurants.indexOf(x) === y;
+
+    });
+
+    $("#search").autocomplete({
+      source: arrRestaurants
+    });
+  }
+  getRestaurantsOfData()
+
   // mostrar fotos filtradas
   function showFilterPhotos(restaurant, index) {
     $("#all-photos").append($("<div class='restaurant-modal text-center'> <p class='p-0 m-0'>" + restaurant.name + "</p> <img id='img" + index + "' class='size-thumbnail-2 rounded m-1' data-toggle='modal' data-target='#start-modal"+ index +"' alt=" + restaurant.name + " src=" + restaurant.image + "></div>"));
@@ -45,6 +65,7 @@ $(document).ready(function () {
     });
     resultSearch = ($("#search").val("")); 
   });
+
 });
 
 // GOOGLE MAPS API

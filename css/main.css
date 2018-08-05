@@ -35,15 +35,18 @@ header a {
   color: #FFC107;
 }
 
-a {
-  color: white;
-  font-weight: 600;
-}
-
 a:hover {
   color: #FFC107;
   text-decoration: none;
   font-weight: 700;
+}
+
+ul {
+  background-color: #ffffff;
+  list-style-type: none;
+  color: #343A40;
+  padding-left: 2vw;
+  width: 75vw;
 }
 
 /* #title {
