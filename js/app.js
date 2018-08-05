@@ -8,22 +8,23 @@ $(document).ready(function () {
   
   // carregar todas as imagens na pag principal
   function showAllPhotos() {
-    restaurantes.filter((restaurant) => {
-      $("#all-photos").append($("<div><a href='#' data-toggle='modal' data-target='.start-modal'><img class='size-thumbnail rounded m-1' alt=" + restaurant.name + " src=" + restaurant.image + "></a></div>"));
+    restaurantes.filter((restaurant, index) => {
+      $("#all-photos").append($("<div> <img id='img" + index + "' class='size-thumbnail rounded m-1' data-toggle='modal' data-target='#start-modal' alt=" + restaurant.name + " src=" + restaurant.image + "> </div>"));
+      console.log(index);
     });
   };
   showAllPhotos();
   
   // mostrar fotos filtradas
   function showFilterPhotos(restaurant, index) {
-    $("#all-photos").append($("<div class='restaurant-modal text-center'><a href='#' data-toggle='modal' data-target='.start-modal'><p>" + restaurant.name + "</p><img class='size-thumbnail-2 rounded m-1' alt=" + restaurant.name + " src=" + restaurant.image + "></a></div>")); 
+    $("#all-photos").append($("<div class='restaurant-modal text-center'> <p>" + restaurant.name + "</p> <img id='img" + index + "' class='size-thumbnail-2 rounded m-1' data-toggle='modal' data-target='#start-modal' alt=" + restaurant.name + " src=" + restaurant.image + "></div>")); 
     
-    $("#all-photos").click(createModal(restaurant, index));
+    $("#img" + index).click(createModal(restaurant));
   }
 
   // criar o modal
-  function createModal(restaurant, index) {
-    $(".modal-body").append("<div id=" + index + " class='restaurant-modal border rounded mb-3 p-2 d-flex flex-column align-items-center'> <h2 class='restaurant-name text-warning font-weight-bold'>" + restaurant.name + "</h2> <p class='text-dark mb-2'>" + restaurant.description + "</p><button type='button' class='btn btn-warning'>Pedir Agora!</button></div>");
+  function createModal(restaurant) {
+    $(".modal-body").append("<div class='restaurant-modal border rounded mb-3 p-2 d-flex flex-column align-items-center'> <h2 class='restaurant-name text-warning font-weight-bold'>" + restaurant.name + "</h2> <p class='text-dark mb-2'>" + restaurant.description + "</p> <button type='button' class='btn btn-warning'>Pedir Agora!</button></div>");
   }
 
   // pegar o valor do input e filtrar quando click do botão
@@ -38,7 +39,7 @@ $(document).ready(function () {
     restaurantes.forEach( (restaurant, index) => {
       if (resultSearch === restaurant.name || resultSearch === restaurant.type) {
         showFilterPhotos(restaurant, index);
-        myMap();
+        // myMap();
       };
     });
     resultSearch = ($("#search").val("")); 
