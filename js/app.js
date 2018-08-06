@@ -5,7 +5,7 @@ $(document).ready(function () {
   $("#main-page").delay("3000").fadeIn("slow");
   
   // criar seções
-  $("#main-page").append("<section id='all-photos' class='d-flex flex-wrap justify-content-center ali'></section>");
+  $("#main-page").append("<section id='all-photos' class='w-75 d-flex flex-wrap justify-content-center align-items-center'></section>");
 
   $("#main-page").append("<section id='section-modal'></section>");
   
