@@ -113,7 +113,7 @@ function myMap() {
         lng: -46.658615
       }
   });
-  restaurantes.map((i) => {
+  restaurantes.forEach((i) => {
     let coords = [];
     coords.push(i.latitude, i.longitude)
     let address = { lat: coords[0], lng: coords[1] }
